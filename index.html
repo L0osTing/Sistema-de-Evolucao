@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -30,8 +29,8 @@
             color: #a855f7;
         }
         #teoria h2 {
-         margin-bottom: 24px;
-         color: #4f46e5;
+           margin-bottom: 24px;
+           color: #4f46e5;
         }
 
         body {
@@ -66,6 +65,13 @@
             margin-top: 2rem;
             margin-bottom: 1rem;
             color: #9ca3af;
+        }
+        h4 { /* Added style for h4 to make it more prominent */
+            font-weight: 700;
+            font-size: 1.25rem; /* Increased font size for h4 */
+            margin-top: 2rem; /* More space above h4 */
+            margin-bottom: 1rem; /* Space below h4 */
+            color: #818cf8; /* A slightly different shade for subheadings */
         }
         p, li {
             line-height: 1.75;
@@ -112,7 +118,7 @@
             <h1 class="mb-8 gradient-text" style="font-size: 20px">Portal do Projeto</h1>
             <p class="mb-8">Todos os materiais do projeto estão centralizados aqui. Use os links abaixo para acessar o código-fonte, o relatório detalhado e o vídeo de apresentação.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                <a href="https://github.com/L0osTing/Sistema-de-evolucao/blob/main/index.html" target="_blank" class="btn">
+                <a href="https://github.com/L0osTing/Sistema-de-evolucao/tree/Codigo" target="_blank" class="btn">
                     Ver Código-Fonte
                 </a>
                 <a href="#relatorio" class="btn">
@@ -125,11 +131,14 @@
         </section>
 
         <section id="teoria" class="section-card" style="font-size: 20px;">
-            <h2>Teoria Aplicada na Prática</h2>
+            <!-- Removed the general "Teoria Aplicada na Prática" heading -->
             <p>Esta seção explica os conceitos de POO que fundamentaram nosso projeto, com exemplos práticos retirados diretamente do nosso código.</p>
 
+            <!-- Main Topic 1: Classes Abstratas e Interfaces -->
+            <h2 class="mt-8">Classes Abstratas e Interfaces (Os Pilares da Abstração)</h2>
+
             <div>
-                <h3>1. Classes Abstratas: O Molde do Personagem</h3>
+                <h3>Classes Abstratas: O Molde do Personagem</h3>
                 <p>Uma classe abstrata é como a planta de um carro: ela define as partes essenciais, mas você não pode dirigir a planta. Você precisa construir um carro real a partir dela. No nosso projeto, `Evoluivel` é a nossa classe abstrata. Ela define que todo personagem terá `nome`, `nivel` e `experiencia`, e força as classes filhas a implementarem o método `descreverPersonagem()`.</p>
                 <pre class="mt-4 rounded-lg"><code class="language-java">
 // A "planta" do personagem. Não pode ser instanciada.
@@ -156,7 +165,7 @@ public abstract class Evoluivel {
             </div>
 
             <div>
-                <h3>2. Interfaces: O Contrato de Habilidade</h3>
+                <h3>Interfaces: O Contrato de Habilidade</h3>
                 <p>Uma interface é como uma "certificação". Ela não diz o que você é, mas garante que você tem a habilidade de fazer algo. No nosso caso, a interface `Upgradavel` garante que qualquer classe que a implemente terá a capacidade de `subirNivel()`. Isso nos dá flexibilidade para que, no futuro, até mesmo itens possam subir de nível, não apenas personagens.</p>
                 <pre class="mt-4 rounded-lg"><code class="language-java">
 // O "contrato" que define a habilidade de subir de nível.
@@ -174,7 +183,7 @@ public abstract class Evoluivel implements Upgradavel {
             </div>
 
             <div>
-                <h3>3. Polimorfismo: A Mágica em Ação</h3>
+                <h3>Polimorfismo: A Mágica em Ação</h3>
                 <p>Polimorfismo significa "muitas formas". É a consequência poderosa de usar herança e interfaces. Ele nos permite tratar objetos diferentes (`Guerreiro`, `Mago`) da mesma maneira, desde que compartilhem uma base comum (`Evoluivel`). Isso simplifica o código drasticamente.</p>
                 <pre class="mt-4 rounded-lg"><code class="language-java">
 // Podemos tratar objetos de tipos diferentes da mesma forma.
@@ -187,23 +196,115 @@ System.out.println(gandalf.descreverPersonagem());
                 </code></pre>
             </div>
 
-            <div>
-                <h3>4. Tratamento de Exceções: Construindo Software Seguro</h3>
-                <p>Um programa robusto sabe como lidar com falhas. Em vez de usar exceções genéricas, criamos as nossas próprias para representar regras de negócio do jogo, como `ExperienciaInsuficienteException`. Isso torna os erros mais claros e o tratamento mais específico.</p>
-                <pre class="mt-4 rounded-lg"><code class="language-java">
-// Lançando nossa exceção personalizada dentro do método subirNivel()
-if (this.experiencia < XP_PARA_PROXIMO_NIVEL) {
-    throw new ExperienciaInsuficienteException("XP insuficiente...");
-}
+             <div>
+                <h3>Classe Abstrata vs. Interface: A Escolha Estratégica</h3>
+                <p>A decisão entre usar uma classe abstrata e uma interface depende da natureza do que você está modelando e das necessidades do seu sistema. Ambas promovem a abstração e o polimorfismo, mas de maneiras diferentes:</p>
+                <ul class="list-disc pl-5 mt-2 mb-4">
+                    <li><strong>Classe Abstrata (`Evoluivel`)</strong>: Utilizamos `Evoluivel` como uma classe abstrata porque ela define um "é um" relacionamento forte. Todos os personagens (Guerreiro, Mago, etc.) <strong>são</strong> um tipo de `Evoluivel`. A classe abstrata nos permitiu compartilhar atributos comuns (nome, nível, experiência) e implementar métodos padrão (`ganharExperiencia`) que são válidos para todos os personagens, enquanto delegamos a implementação de métodos específicos (`descreverPersonagem`) para as subclasses. Isso evita duplicação de código e garante uma base consistente.</li>
+                    <li><strong>Interface (`Upgradavel`)</strong>: Optamos por uma interface para `Upgradavel` porque ela define uma "pode fazer" capacidade. Nem tudo no nosso jogo <strong>é</strong> um personagem, mas muitas coisas <strong>podem ser atualizadas</strong>. Ao usar uma interface, mantemos a flexibilidade para que, no futuro, itens, equipamentos ou até mesmo habilidades possam implementar `Upgradavel` e ter a lógica de `subirNivel()`, sem a necessidade de serem hierarquicamente relacionados a `Evoluivel`. Isso promove um design mais flexível e desacoplado.</li>
+                </ul>
+                <p>Em resumo, a classe abstrata foi usada para definir a base comum e o comportamento padrão dos personagens, enquanto a interface foi empregada para declarar uma capacidade que pode ser compartilhada por diversas entidades no jogo, independentemente de sua hierarquia de classes.</p>
+            </div>
 
-// Capturando o erro de forma elegante com try-catch
+            <!-- Main Topic 2: Tratamento de Exceções -->
+            <h2 class="mt-8">Tratamento de Exceções: Construindo Software Seguro</h2>
+            <p class="mb-8">Um programa robusto sabe como lidar com falhas de forma elegante. Em vez de depender de exceções genéricas, podemos criar as nossas próprias para representar as <strong>regras de negócio</strong> do jogo, como `ExperienciaInsuficienteException`. Isso torna os erros mais claros e o tratamento mais específico, resultando em um código mais <strong>seguro e fácil de manter</strong>.</p>
+
+            <h3>Hierarquia de Erros: `Error` vs. `Exception`</h3>
+            <p class="mb-4">Em Java, a hierarquia de erros é dividida em duas categorias principais:</p>
+            <ul class="mb-8">
+                <li><strong>`Error`</strong>: Representa problemas graves que geralmente indicam falhas irrecuperáveis do sistema, como falta de memória (`OutOfMemoryError`) ou erros na máquina virtual Java (`VirtualMachineError`). Geralmente, você <strong>não deve tentar tratar `Error`s</strong> diretamente, pois eles sinalizam condições que estão fora do controle do seu programa.</li>
+                <li><strong>`Exception`</strong>: Representa condições excepcionais que um programa pode (e deve) tentar capturar e tratar. Existem dois tipos de exceções: <strong>checadas</strong> e <strong>não checadas</strong>.</li>
+            </ul>
+
+            <h3>Exceções Checadas (`Checked`) vs. Não Checadas (`Unchecked`)</h3>
+            <p class="mb-4">A escolha entre exceções checadas e não checadas tem um impacto significativo na forma como você escreve e trata os erros:</p>
+            <ul class="mb-8">
+                <li><strong>Exceções Checadas (`Checked Exceptions`)</strong>: São exceções que o compilador <strong>força você a tratar ou declarar</strong>. Elas herdam diretamente da classe `Exception` (mas não de `RuntimeException`). Exemplos comuns incluem `IOException` (erro de entrada/saída) ou `SQLException` (erro de banco de dados).
+                    <ul class="ml-4 mt-2">
+                        <li><strong>Impacto no código</strong>: Métodos que podem lançar exceções checadas devem usar a palavra-chave `throws` na sua assinatura, e o código que chama esses métodos deve envolvê-los em um bloco `try-catch` ou também declarar que lança a exceção. Isso garante que o desenvolvedor esteja ciente e planeje o tratamento dessas possíveis falhas.</li>
+                        <li><strong>Quando usar</strong>: São ideais para condições excepcionais que o programa pode prever e que exigem uma <strong>decisão de recuperação</strong> por parte do chamador. Por exemplo, se um arquivo não for encontrado, o programa pode tentar criar um novo ou informar o usuário.</li>
+                    </ul>
+                </li>
+                <li class="mt-4"><strong>Exceções Não Checadas (`Unchecked Exceptions`)</strong>: São exceções que o compilador <strong>não força você a tratar ou declarar</strong>. Elas herdam da classe `RuntimeException`. Exemplos incluem `NullPointerException` (tentar acessar um objeto nulo) ou `ArrayIndexOutOfBoundsException` (tentar acessar um índice inválido em um array).
+                    <ul class="ml-4 mt-2">
+                        <li><strong>Impacto no código</strong>: Não há requisito de `try-catch` ou `throws` explícito, embora você possa tratá-las se desejar.</li>
+                        <li><strong>Quando usar</strong>: São apropriadas para <strong>erros de programação</strong> ou falhas que indicam um bug no código. Por exemplo, se você tentar dividir por zero, isso indica um problema lógico que deve ser corrigido, não uma condição que o programa deva tentar se recuperar elegantemente.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Mecanismos de Tratamento: `try-catch-finally`</h3>
+            <p class="mb-4">Para capturar e tratar erros de forma elegante, utilizamos os blocos `try-catch-finally`:</p>
+            <ul class="mb-8">
+                <li><strong>`try`</strong>: Contém o código que pode potencialmente lançar uma exceção.</li>
+                <li><strong>`catch`</strong>: Bloco executado se uma exceção específica for lançada dentro do bloco `try`. Você pode ter múltiplos blocos `catch` para tratar diferentes tipos de exceções.</li>
+                <li><strong>`finally`</strong>: Opcional, este bloco é <strong>sempre executado</strong>, independentemente de uma exceção ter sido lançada ou não. É ideal para liberar recursos, como fechar conexões de banco de dados ou streams de arquivo, garantindo que a limpeza seja sempre realizada.</li>
+            </ul>
+            <pre class="mt-4 rounded-lg"><code class="language-java">
 try {
+    // Código que pode lançar uma ExperienciaInsuficienteException
     gandalf.subirNivel();
 } catch (ExperienciaInsuficienteException e) {
+    // Capturando o erro de forma elegante
     System.err.println("AVISO: " + e.getMessage());
+    // Outras ações de tratamento, como registrar o erro ou notificar o usuário
+} catch (IOException e) {
+    // Tratando outras exceções, se aplicável
+    System.err.println("Erro de E/S: " + e.getMessage());
+} finally {
+    // Este bloco é sempre executado, útil para limpeza de recursos
+    System.out.println("Processo de nivelamento finalizado.");
 }
-                </code></pre>
-            </div>
+            </code></pre>
+
+            <h3>Lançando Exceções: `throw` e `throws`</h3>
+            <p class="mb-4">Para sinalizar problemas no seu programa, usamos as palavras-chave `throw` e `throws`:</p>
+            <ul class="mb-8">
+                <li><strong>`throw`</strong>: Usada para <strong>lançar explicitamente uma exceção</strong> de dentro de um método ou bloco de código. Quando uma exceção é lançada, a execução normal do programa é interrompida e o controle é transferido para o bloco `catch` mais próximo que possa lidar com essa exceção.</li>
+            </ul>
+            <pre class="mt-4 rounded-lg"><code class="language-java">
+// Lançando nossa exceção personalizada dentro do método subirNivel()
+if (this.experiencia < XP_PARA_PROXIMO_NIVEL) {
+    throw new ExperienciaInsuficienteException("XP insuficiente para o próximo nível.");
+}
+            </code></pre>
+            <ul class="mb-8">
+                <li><strong>`throws`</strong>: Usada na <strong>assinatura de um método</strong> para declarar que ele pode lançar uma ou mais exceções checadas. Isso informa ao compilador e a quem chama o método que essa exceção precisa ser tratada.</li>
+            </ul>
+            <pre class="mt-4 rounded-lg"><code class="language-java">
+public void realizarSaque(double valor) throws SaldoInsuficienteException {
+    if (this.saldo < valor) {
+        throw new SaldoInsuficienteException("Saldo insuficiente para realizar o saque.");
+    }
+    this.saldo -= valor;
+}
+            </code></pre>
+
+            <h3>Criando Exceções Personalizadas</h3>
+            <p class="mb-4">A importância de criar seus próprios tipos de erro, como `ExperienciaInsuficienteException` ou `SaldoInsuficienteException`, é fundamental para tornar o sistema mais claro e fácil de dar manutenção.</p>
+            <ul class="mb-8">
+                <li><strong>Clareza e Especificidade</strong>: Exceções personalizadas permitem que você represente <strong>condições de erro específicas do seu domínio de negócio</strong>. Em vez de usar um genérico `IllegalArgumentException`, uma `ExperienciaInsuficienteException` imediatamente diz ao desenvolvedor qual é o problema.</li>
+                <li><strong>Facilidade de Manutenção</strong>: Ao ter exceções bem definidas, o código de tratamento de erros se torna mais legível e fácil de depurar. Você pode ter blocos `catch` específicos para cada tipo de problema, permitindo um tratamento mais preciso.</li>
+                <li><strong>Encapsulamento de Regras de Negócio</strong>: Suas exceções personalizadas podem carregar informações adicionais relevantes para o erro, como o valor da experiência atual ou o saldo disponível, que podem ser úteis para o tratamento ou log.</li>
+            </ul>
+            <p class="mb-4">Para criar uma exceção personalizada, basta que ela herde de `Exception` (para checadas) ou `RuntimeException` (para não checadas):</p>
+            <pre class="mt-4 rounded-lg"><code class="language-java">
+// Exemplo de exceção personalizada checada
+public class ExperienciaInsuficienteException extends Exception {
+    public ExperienciaInsuficienteException(String message) {
+        super(message);
+    }
+}
+
+// Exemplo de exceção personalizada não checada (se fosse o caso)
+public class SaldoInsuficienteException extends RuntimeException {
+    public SaldoInsuficienteException(String message) {
+        super(message);
+    }
+}
+            </code></pre>
+            <p>Ao adotar uma abordagem estruturada para o tratamento de exceções, com o uso de `try-catch-finally`, o lançamento adequado de exceções e a criação de tipos personalizados, você constrói software mais <strong>confiável, robusto e fácil de manter</strong>.</p>
         </section>
 
         <section id="relatorio" class="section-card">
