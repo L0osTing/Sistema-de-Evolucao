@@ -25,4 +25,4 @@ O resultado final do projeto está publicado e pode ser acessado por qualquer pe
 * **HTML5:** Para a estrutura e conteúdo do site.
 * **CSS3:** Para a estilização e design visual.
 * **GitHub Pages:** Para a hospedagem gratuita do site.
-* **Java** Para desenvolvimento do projeto.
+* **Java:** Para desenvolvimento do projeto.
